@@ -1,20 +1,51 @@
 package exercise10;
 
-public class RectangleDemo {
-    public static void main(String[] args) {
-        Rectangle rectangle1 = new Rectangle();
-        Point startPoint2 = new Point(1, 1);
-        Rectangle rectangle2 = new Rectangle(startPoint2, 2, 3);
-        Rectangle rectangle3 = new Rectangle(rectangle2);
-        Rectangle rectangle4 = new Rectangle();
-        rectangle4.initialize();
 
-        System.out.println("1. " + rectangle1);
-        System.out.println("2. " + rectangle2);
-        System.out.println("3. " + rectangle3);
-        System.out.println("4. " + rectangle4);
+public class Rectangle extends Figure {
+    public Rectangle() {
+        super(new Point(0, 0), 1, 1);
+    }
 
-        System.out.println("2. equals 1.: " + rectangle2.equal(rectangle1));
-        System.out.println("2. equals 3.: " + rectangle2.equal(rectangle3));
+    public Rectangle(Point startPoint, double height, double width) {
+        super(startPoint, height, width);
+    }
+
+    public Rectangle(Rectangle otherRectangle) {
+        super(otherRectangle.startPoint, otherRectangle.side1, otherRectangle.side2);
+    }
+
+    @Override
+    public double calculatePerimeter() {
+        return side1 * 2 + side2 * 2;
+    }
+
+    @Override
+    public double calculateArea() {
+        return side1 * side2;
+    }
+
+    @Override
+    public String getType() {
+        return (side1 == side2) ? "Square" : "Rectangle";
+    }
+
+    @Override
+    public boolean equal(Figure otherFigure) {
+        if (otherFigure instanceof Rectangle) {
+            return super.equal(otherFigure);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean containsClick(Point click) {
+        if (click.getX() >= startPoint.getX() &&
+            click.getX() <= startPoint.getX() + side2 &&
+            click.getY() >= startPoint.getY() &&
+            click.getY() <= startPoint.getY() + side1) {
+                return true;
+        }
+        return false;
     }
 }
